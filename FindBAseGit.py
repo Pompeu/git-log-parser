@@ -1,4 +1,3 @@
-from dateutil.parser import parse
 import datetime
 import re
 import os
@@ -31,10 +30,12 @@ class FindBaseGit():
         return f'{self.git_author}_{self.initial_date}_{self.end_date}_commits_edit.txt'
 
     def _parse_dates(self, initial_date, end_date):
-        initial_date_to_validate = parse(initial_date)
-        end_date_to_validate = parse(end_date)
+        [day_init, month_init, year_init] = map(int, initial_date.split('/'))
+        [day_end, month_end, year_end] = map(int, end_date.split('/'))
+        initial_date_to_validate = datetime.date(year_init, month_init, day_init)
+        end_date_to_validate = datetime.date(year_end, month_end, day_end)
 
-        if self.validate_range(initial_date_to_validate, end_date_to_validate):
+        if self.validate_range(initial_date_to_validate, end_date_to_validate ):
             self._format_date(initial_date_to_validate, end_date_to_validate)
 
     def _format_date(self, initial_date, end_date):
