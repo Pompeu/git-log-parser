@@ -32,6 +32,7 @@ class FindBaseGit():
     def _parse_dates(self, initial_date, end_date):
         [day_init, month_init, year_init] = map(int, initial_date.split('/'))
         [day_end, month_end, year_end] = map(int, end_date.split('/'))
+
         initial_date_to_validate = datetime.date(year_init, month_init, day_init)
         end_date_to_validate = datetime.date(year_end, month_end, day_end)
 
@@ -44,9 +45,11 @@ class FindBaseGit():
         self.end_date = end_date.strftime(format_date)
 
     def validate_key(self):
-        if re.compile("^c[0-9]{7}$").fullmatch(self.git_author) is not None:
+        if re.compile("^c[0-9]{7}$", re.IGNORECASE).fullmatch(self.git_author) is not None:
             return True
 
+        if re.compile("^f[0-9]{7}$", re.IGNORECASE).fullmatch(self.git_author) is not None:
+            return True
         raise Exception("git_author is valid try 'cNumber(7)', like your internal key")
 
     def validate_range(self, initial_date_to_validate, end_date_to_validate):

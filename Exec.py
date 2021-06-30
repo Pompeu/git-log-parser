@@ -61,10 +61,14 @@ class Exec():
 
         with open(self.findBaseGit.commits_filename(tipo_add), "a") as cf:
             for f in  self._filter_filtes_tipo(tipo_add):
-                cf.write(f'{self.findBaseGit.project_path}{self.findBaseGit.blob_path}{f.hashcode}/{f.filename}\n')
+                path = self.findBaseGit.project_path.replace("https://fontes.intranet.bb.com.br", "")
+                cf.write(f'{path}/{f.filename}#{f.hashcode[-10:]}\n')
+                #cf.write(f'{self.findBaseGit.project_path}{self.findBaseGit.blob_path}{f.hashcode}/{f.filename}\n')
         with open(self.findBaseGit.commits_filename(tipo_edit), "a") as cf:
             for f in self._filter_filtes_tipo(tipo_edit):
-                cf.write(f'{self.findBaseGit.project_path}{self.findBaseGit.blob_path}{f.hashcode}/{f.filename}\n')
+                path = self.findBaseGit.project_path.replace("https://fontes.intranet.bb.com.br", "")
+                cf.write(f'{path}/{f.filename}#{f.hashcode[-10:]}\n')
+                #cf.write(f'{self.findBaseGit.project_path}{self.findBaseGit.blob_path}{f.hashcode}/{f.filename}\n')
 
     def write_files(self):
         if self.findBaseGit.can_write():
